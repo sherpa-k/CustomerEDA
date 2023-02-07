@@ -1,0 +1,12 @@
+---
+title: "Customer Data Analysis"
+author: "Kalsang Sherpa"
+output: html_notebook
+---
+
+### Required Packages :
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+```{r}
