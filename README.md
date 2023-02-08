@@ -11,3 +11,13 @@ The dataset we used was found here https://www.kaggle.com/datasets/arianazmoudeh
 ### Data Understanding
 The dataset used had a total of 102,599 rows/observations and 26 columns. In terms of missing data, we had 190,770 missing values/cells. In total, **7.15%** of our data set was missing. The data also included various columns including, neighbourhood (borough), neighbourhood group, price, room type, service fee, etc.
 
+### Data Cleaning
+Overall, the dataset was disorganized and fairly messy, therefore we carried out:
+
+1) Changed all column names to consistent names (lowercase and seperated with an underscore between words).
+2) Removed columns that had too many missing values (threshold we used was 50% missing data).
+3) Fixed mispelt neighborhood group names (ex. brookln to Brooklyn).
+4) removed observations with missing values for neighborhood groups.
+5) removed observations with missing values for neighborhoods.
+6) changed price to a numeric.
+7) imputed missing prices with the average price for listings within the respective neighborhood group.
