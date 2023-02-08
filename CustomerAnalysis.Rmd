@@ -1,5 +1,5 @@
 ---
-title: "Customer Data Analysis"
+title: "Airbnb Data Analysis"
 author: "Kalsang Sherpa"
 output: html_notebook
 ---
@@ -9,4 +9,65 @@ output: html_notebook
 library(tidyverse)
 ```
 
+
+### Data Importing : 
 ```{r}
+dat <- read_csv("Airbnb_Open_Data.csv")
+
+# view first couple rows
+head(dat)
+summary(dat)
+
+# Look for missing values
+sum(is.na(dat))
+colSums(is.na(dat))
+```
+
+### Data Cleaning and Exploring:
+```{r}
+# Fix column names to have consistency
+header <- colnames(dat)
+header
+
+header <- tolower(header)
+header <- str_replace_all(header, " ", "_")
+colnames(dat) <- header # new column names
+
+glimpse(dat)
+```
+
+```{r}
+unique(dat$neighbourhood_group) # Check different groups of neighborhoods
+sum(is.na(dat$neighbourhood_group)) 
+
+
+dat <- dat %>% 
+  # Correct the spelling of neighbourhood groups
+  mutate(neighbourhood_group = if_else(neighbourhood_group == "brookln", "Brooklyn", neighbourhood_group))%>%
+  mutate(neighbourhood_group = if_else(neighbourhood_group == "manhatan", "Manhattan", neighbourhood_group)) %>%
+  # Drop the rows where neighborhood group isn't listed.
+  drop_na(neighbourhood_group)
+
+table(dat$neighbourhood_group)
+prop.table(table(dat$neighbourhood_group))
+
+# Remove missing neighbourhood values.
+sum(is.na(dat$neighbourhood))
+dat <- drop_na(dat, neighbourhood)
+
+# Change data type of 'price'
+dat$price <- gsub(",", "", dat$price)
+dat$price <- gsub("\\$", "", dat$price)
+dat$price <- as.numeric(dat$price)
+
+# Impute missing price with the average price for that neighbourhood group.
+sum(is.na(dat$price))
+summary(dat$price)
+dat <- dat %>%
+  group_by(neighbourhood_group) %>%
+  mutate(price = ifelse(is.na(price), mean(price, na.rm = T), price))
+
+
+
+
+```
