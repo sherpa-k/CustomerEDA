@@ -8,7 +8,6 @@ The dataset we used was found here https://www.kaggle.com/datasets/arianazmoudeh
 
 ## Overview
 
-### Data Cleaning 
-
-
 ### Data Understanding
+The dataset used had a total of 102,599 rows/observations and 26 columns. In terms of missing data, we had 190,770 missing values/cells. In total, 7.15% of our data set was missing. The data also included various columns including, neighbourhood (borough), neighbourhood group, price, room type, service fee, etc.
+
