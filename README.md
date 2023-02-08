@@ -9,7 +9,37 @@ The dataset we used was found here https://www.kaggle.com/datasets/arianazmoudeh
 ## Overview
 
 ### Data Understanding
-The dataset used had a total of 102,599 rows/observations and 26 columns. In terms of missing data, we had 190,770 missing values/cells. In total, **7.15%** of our data set was missing. The data also included various columns including, neighbourhood (borough), neighbourhood group, price, room type, service fee, etc.
+The dataset used had a total of 102,599 rows/observations and 26 columns. In terms of missing data, we had 190,770 missing values/cells. In total, **7.15%** of our data set was missing. 
+
+Dictionary of columns in data:
+| Column | Description |
+| id | Unique identifier |
+| name | Name/description used on Airbnb listing |
+| host_id | Host's identifier |
+| host_identified_verified | Confirms if the host is a verified host |
+| host_name | Name of the host |
+| neighbourhood_group | Borough |
+| neighbourhood |Neighbourhood of the borough |
+| lat | Latitude |
+| long | Longitude |
+| country | Country |
+| country_code | Country_code| 
+| instant_bookable | T/F if listing can be booked immediadely |
+| cancellation_policy | Flexibility of cancellation |
+| room_type | type of listing (home/room/hotel) |
+| Construction year | Year it was built |
+| Price | Rental price |
+| service_fee | Airbnb profit |
+| minimum_nights | Minimum amount of stay |
+| number_of_reviews | Amount of reviews on Airbnb |
+| last_review | Date of last review |
+| reviews_per_month | Average number of reviews per month |
+| review_rate_number | Total average of reviews |
+| calculated_host_listings_count | Amount of guests.
+| availability 365 | number of days the property is available in the year |
+| house_rules | Rules for the guests |
+
+
 
 ### Data Cleaning
 Overall, the dataset was disorganized and fairly messy, therefore we carried out:
