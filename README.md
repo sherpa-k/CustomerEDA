@@ -12,7 +12,9 @@ The dataset we used was found here https://www.kaggle.com/datasets/arianazmoudeh
 The dataset used had a total of 102,599 rows/observations and 26 columns. In terms of missing data, we had 190,770 missing values/cells. In total, **7.15%** of our data set was missing. 
 
 Dictionary of columns in data:
+
 | Column | Description |
+| ----- | ----- |
 | id | Unique identifier |
 | name | Name/description used on Airbnb listing |
 | host_id | Host's identifier |
