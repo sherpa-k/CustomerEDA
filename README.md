@@ -82,16 +82,28 @@ To split it up by boroughs :
 | Bronx	| 2310	| $630.22 |
 | Staten Island	| 834 |	$622.47 |
 
-We can see that Brooklyn and Manhattan are the main hotspots for airbnb listings, with the two boroughs accounting for 41.49% and 41.47% of the total listings, respectively. Queens and the Bronx both are the highest costing boroughs, however, there is not significant average price difference between the 5 boroughs.\\
+We can see that Brooklyn and Manhattan are the main hotspots for airbnb listings, with the two boroughs accounting for 41.49% and 41.47% of the total listings, respectively. Queens and the Bronx both are the highest costing boroughs, however, there is not significant average price difference between the 5 boroughs.\
 
-Next we broke down the average prices in each borough, by room type. In the data set there are 4 different possible room types consisting of :\
+Next we broke down the average prices in each borough, by room type. In the data set there are 4 different possible room types consisting of :
 
-| Room Type |
+| Room Type | Listing |
 | --- |
-| Entire Home / Apartment |
-| Hotel Room |
-| Private Room |
-| Shared Room |
+| Entire Home / Apartment | 44837 | 
+| Hotel Room | 114 |
+| Private Room | 38090 |
+| Shared Room | 1686 |
 
+![byroom](CustomerAnalysis_files/figure-gfm/unnamed-chunk-11-1.png)
 
+In the bar chart above, we can see that in Bronx there were no listings for hotel rooms and neither was there for Staten Island, which makes sense as hotel rooms were scarce with only 114 total listings (.13%). For Brooklyn and Manhattan we can see that hotel rooms were clearly more expensive than other room types in their respective boroughs, however, in Queens, hotel rooms were much cheaper. Entire homes/apartments were very consistent with their pricing across all 5 boroughs.\
+
+Next we took a look at the ratings that the hosts were given. 
+![reviews](CustomerAnalysis_files/figure-gfm/unnamed-chunk-12-1.png)
+The average rating came out to be 3.28 for all listings. The rating scores were distributed with around 20,000 entries for scores of 2-4 and less than 10,000 entries for a score of 1.\
+
+Analyzing the review ratings to see if neighborhoods skewed the scores, took the average ratings for neighborhoods. However once we ordered the review ratings, we limited our entries to neighborhoods that had over 50 listings as a way to combat skews from lack of sufficient data (i.e. neighbourhoods that had 1 listing that scored a 5). Therefore, we viewed only the neighborhoods that hosted 50 times. 
+
+![neighborhoods](CustomerAnalysis_files/figure-gfm/unnamed-chunk-13-1.png)
+
+We can see that the highest scoring neighbourhood was 
 
