@@ -69,13 +69,17 @@ Ultimately, we are now left with 84,727 observations and 20 variables.
 
 ### Data Analysis
 
-Looking at the distribution of prices, we can see that the average cost of an Airbnb in NYC per night came out to be $626.16 across all 5 boroughs. 
+Looking at the distribution of prices, we can see that the average cost of an Airbnb in NYC per night came out to be $626.16 across all 5 boroughs. When plotted as a bar graph, we can see the average cost per night is evenly distributed. 
+![pricedist](CustomerAnalysis_files/figure-gfm/unnamed-chunk-10-1.png)
+
 To split it up by boroughs :
 | Borough	| Listings | Average Price |
 | --- | --- | --- |
-| Brooklyn | 35154	| 627.54|
-| Manhattan |	35128	| 623.18 |
-| Queens |	11301	| 630.56 |
-| Bronx	| 2310	| 630.22 |
-| Staten Island	| 834 |	622.47 |
+| Brooklyn | 35154	| $627.54|
+| Manhattan |	35128	| $623.18 |
+| Queens |	11301	| $630.56 |
+| Bronx	| 2310	| $630.22 |
+| Staten Island	| 834 |	$622.47 |
+
+
 
