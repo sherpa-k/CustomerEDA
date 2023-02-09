@@ -18,7 +18,7 @@ library(tm)
 
 
 ### Data Importing : 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 dat <- read_csv("Airbnb_Open_Data.csv")
 
 # view first couple rows
@@ -33,7 +33,7 @@ colSums(is.na(dat))
 ### Data Cleaning :
 
 Some of the column names aren't consistent. Therefore, in order to follow the same naming rules we changed all column names to lowercase and added an underscore in between words.
-```{r}
+```{r, warning = FALSE}
 # Fix column names to have consistency
 header <- colnames(dat)
 header
@@ -125,7 +125,7 @@ neigh_roomtype <- dat %>%
 neigh_roomtype
 ```
 
-Distribution of Price
+Looking at the density and distribution of listing prices. Price is distributed uniformly.
 ```{r}
 ggplot(dat, aes(x = price)) +
   geom_histogram(aes(y = ..density..), bins = 20, colour = "red", fill = "white") +
@@ -137,7 +137,7 @@ ggplot(dat, aes(x = price)) +
   
 ```
 
-
+Look at the prices of different room types in each borough. 
 ```{r}
 ggplot(neigh_roomtype, aes(x = room_type, y = average_price, group = room_type)) +
   geom_col(aes(stat = "identity", fill = room_type))  + 
@@ -151,7 +151,7 @@ ggplot(neigh_roomtype, aes(x = room_type, y = average_price, group = room_type))
   facet_grid(. ~ neighbourhood_group)
 ```
 
-
+Check the distribution of review ratings.
 ```{r}
 avg_rating <- round(mean(dat$review_rate_number), digits = 2)
 ggplot(dat, aes(x = review_rate_number)) +
@@ -161,7 +161,10 @@ ggplot(dat, aes(x = review_rate_number)) +
        y = "Count") +
   geom_textvline(xintercept = avg_rating, linetype = "dotdash", label = paste("Average = ", avg_rating, sep = "")) +
   theme_minimal()
+```
 
+Visualize the top ten average review ratings based on neighbourhoods. In order to qualify, neighbourhood must have at least 50 listings.
+```{r, warnging = FALSE}
 # Find top ten neighborhoods in terms of reviews.
 top_ten <- dat %>%
   group_by(neighbourhood_group, neighbourhood) %>%
@@ -188,8 +191,7 @@ ggplot(top_ten, aes(x = neighbourhood, y = avg_rating, group = neighbourhood_gro
 
 ```
 
-
-Correlation between cancellation policy and reviews.
+Look at the differences in reviews between different cancellation policies. 
 ```{r}
 prop.table(table(dat$cancellation_policy))
 
@@ -199,6 +201,10 @@ by_policy <- dat %>%
   summarise(average_review = mean(review_rate_number))
 by_policy
 
+```
+
+View average review ratings by borough.
+```{r, warning = FALSE}
 # View review by boroughs. 
 borough_review <- dat %>%
   group_by(neighbourhood_group) %>%
@@ -211,6 +217,7 @@ ggplot(borough_review, aes(x = neighbourhood_group, y = avg_review)) +
   theme_classic()
 ```
 
+Looking at frequently used adjectives in listings that were rated 4 and 5 stars.
 ```{r, warning = FALSE}
 # Get 4 and 5 star reviews.
 highreviews.dat <- dat %>%
@@ -239,6 +246,10 @@ df.dat <- df.dat %>%
   left_join(parts_of_speech) %>%
   filter(pos %in% "Adjective")
 
+head(df.dat)
+# Manually remove some words
+df.dat <- df.dat[c(-3, -5, -8, -11, -15, -16),]
+
 # Create word cloud
 set.seed(3005)
 wordcloud(words = df.dat$word, freq = df.dat$freq, min.freq = 50, random.order = FALSE, colors = brewer.pal(9, 'Set1'))
@@ -246,9 +257,11 @@ wordcloud(words = df.dat$word, freq = df.dat$freq, min.freq = 50, random.order =
 top_ten <- df.dat[1:10,]
 top_ten$word <- factor(top_ten$word, levels = top_ten$word[order(top_ten$freq, decreasing = TRUE)])
 ggplot(top_ten, aes(x = word, y = freq)) +
-  geom_col(aes(stat = "identity"), fill = "lightblue", color = "black") 
-
-
+  geom_col(aes(stat = "identity"), fill = "lightblue", color = "black") +
+  labs(title = "Top Ten Frequently Used Adjectives in Highly Rated Listings", 
+       x = "Adjectives",
+       y = "Frequency Count") +
+  theme_classic()
 
 ```
 
