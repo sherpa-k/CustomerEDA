@@ -125,12 +125,14 @@ kable(neigh_roomtype)
 
 Looking at the density and distribution of listing prices. Price is distributed uniformly.
 ```{r}
+avg_price <- round(mean(dat$price),digits = 2)
 ggplot(dat, aes(x = price)) +
   geom_histogram(aes(y = ..density..), bins = 20, colour = "red", fill = "white") +
   labs(title = "Density Plot of Price",
        x = "Price",
        y = "Density") +
   geom_density(alpha = .2, fill = "blue") +
+  geom_textvline(xintercept = avg_price, linetype = "dotdash", label = paste("Average = ", avg_price, sep = "")) +
   theme_bw()
   
 ```
