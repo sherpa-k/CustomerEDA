@@ -10,12 +10,12 @@ The dataset we used was found here https://www.kaggle.com/datasets/arianazmoudeh
 ## Overview
 
 ### Required Packages
-knitr
-tidyverse
-tidytext
-geomtextpath
-wordcloud
-RColorBrewer
+knitr\
+tidyverse\
+tidytext\
+geomtextpath\
+wordcloud\
+RColorBrewer\
 tm
 
 ### Data Understanding
