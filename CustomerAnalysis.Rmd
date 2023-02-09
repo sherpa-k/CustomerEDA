@@ -1,12 +1,15 @@
 ---
 title: "Airbnb Data Analysis"
 author: "Kalsang Sherpa"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 ### Required Packages :
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(geomtextpath)
 ```
 
 
@@ -23,7 +26,9 @@ sum(is.na(dat))
 colSums(is.na(dat))
 ```
 
-### Data Cleaning and Exploring:
+### Data Cleaning :
+
+Some of the column names aren't consistent. Therefore, in order to follow the same naming rules we changed all column names to lowercase and added an underscore in between words.
 ```{r}
 # Fix column names to have consistency
 header <- colnames(dat)
@@ -36,10 +41,25 @@ colnames(dat) <- header # new column names
 glimpse(dat)
 ```
 
+Looking at the two columns 'license' and 'house_rules', we can see that license is completely missing (100% missing data) and house_rules is missing 52,1331 observations (50.81% missing). Drawing the line at 50% we plan to remove anything over 50% missing, since having half the data missing is not favorable for imputation. We also removed 'country' and 'country_code' since all the data is from only NYC. Lastly, we removed latitude and longitude since our data is all in NYC and doesn't require those measurements to locate them.
 ```{r}
-unique(dat$neighbourhood_group) # Check different groups of neighborhoods
-sum(is.na(dat$neighbourhood_group)) 
+# Remove license and house rules from data set
+dat <- dat %>% 
+  select(-license, -house_rules) %>%
+  select(-country, -country_code) %>%
+  select(-lat, -long)
+```
 
+We drop categorical variables that we would have trouble imputing. We also dropped non-numeric variables such as name and host_name that would not be imputable.
+```{r}
+dat <- dat %>%
+  drop_na(instant_bookable, name, host_identity_verified, host_name, cancellation_policy)
+
+```
+Looking at the proportion of different neighborhood groups, we can see that there is one observation for both Manhattan and Brooklyn that is spelled incorreclty, therefore, we add it to the correct neighborhood group. We also have 18 missing values in neighborhood group that we elect to drop since there is not reasonable way to impute it, as well as 14 missing neighborhood values.
+```{r}
+table(dat$neighbourhood_group)
+sum(is.na(dat$neighbourhood_group))
 
 dat <- dat %>% 
   # Correct the spelling of neighbourhood groups
@@ -48,26 +68,121 @@ dat <- dat %>%
   # Drop the rows where neighborhood group isn't listed.
   drop_na(neighbourhood_group)
 
-table(dat$neighbourhood_group)
-prop.table(table(dat$neighbourhood_group))
-
 # Remove missing neighbourhood values.
 sum(is.na(dat$neighbourhood))
 dat <- drop_na(dat, neighbourhood)
-
+```
+Here we first change price and service fee to numerics, then impute the missing values based on the neighborhood averages. 
+```{r}
 # Change data type of 'price'
 dat$price <- gsub(",", "", dat$price)
 dat$price <- gsub("\\$", "", dat$price)
 dat$price <- as.numeric(dat$price)
 
+# Change data type of 'service_fee'
+dat$service_fee <- gsub(",", "", dat$service_fee)
+dat$service_fee <- gsub("\\$", "", dat$service_fee)
+dat$service_fee <- as.numeric(dat$service_fee)
+
+
+
 # Impute missing price with the average price for that neighbourhood group.
-sum(is.na(dat$price))
-summary(dat$price)
 dat <- dat %>%
   group_by(neighbourhood_group) %>%
-  mutate(price = ifelse(is.na(price), mean(price, na.rm = T), price))
+  mutate(price = ifelse(is.na(price), round(mean(price, na.rm = T)), price)) %>%
+  # since service fee is dependent on price, we will also change the service fee based on neighbourhood group.
+  mutate(service_fee = ifelse(is.na(service_fee), round(mean(service_fee, na.rm = T)), service_fee))
+```
+
+Lastly, looking at the remaining missing values, we just removed the remaining ones since we don't plan on imputing them. By doing this we dropped 16.56% of our data.
+```{r}
+colSums(is.na(dat))
+
+pre <- nrow(dat)
+# Remove all of the remaining NA's
+dat <- na.omit(dat)
+
+print(paste("By dropping the remaining missing values, we have dropped", pre - nrow(dat), "observations.", sep =" "))
+```
+
+### Data Analysis
+
+About 70,282 listings (82.95%) were located in Brooklyn or Manhattan. The highest average price by borough was Queens, coming in at $630.56 a night. When we break down the listings by borough and by room type we can see that the different room types that were listed in each borough.
+```{r}
+by_neigh <- dat %>%
+  group_by(neighbourhood_group) %>%
+  summarise(listings = n(), average_price = mean(price)) %>%
+  arrange(desc(listings))
+by_neigh
+
+neigh_roomtype <- dat %>% 
+  group_by(neighbourhood_group, room_type) %>%
+  summarise(listings = n(), average_price = mean(price))
+neigh_roomtype
+```
+
+Distribution of Price
+```{r}
+ggplot(dat, aes(x = price)) +
+  geom_histogram(aes(y = ..density..), bins = 20, colour = "red", fill = "white") +
+  labs(title = "Density Plot  of Price",
+       x = "Price",
+       y = "Density") +
+  geom_density(alpha = .2, fill = "blue") +
+  theme_bw()
+  
+```
 
 
+```{r}
+ggplot(neigh_roomtype, aes(x = room_type, y = average_price, group = room_type)) +
+  geom_col(aes(stat = "identity", fill = room_type))  + 
+  scale_y_continuous(limits = c(0, 800)) +
+  labs(title = "Average Prices per Room Type in Each Borough",
+       x = "Average Price",
+       y = "Room Types",
+       fill = "Room Type") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
+  facet_grid(. ~ neighbourhood_group)
+```
 
+
+```{r}
+avg_rating <- round(mean(dat$review_rate_number), digits = 2)
+ggplot(dat, aes(x = review_rate_number)) +
+  geom_histogram(binwidth = 1, color = "blue", fill = "grey") +
+  labs(title = "Distribution of Review Scores",
+       x = "Rating",
+       y = "Count") +
+  geom_textvline(xintercept = avg_rating, linetype = "dotdash", label = paste("Average = ", avg_rating, sep = "")) +
+  theme_minimal()
 
 ```
+Correlation between cancellation policy and reviews.
+```{r}
+prop.table(table(dat$cancellation_policy))
+
+# Check to see review by different cancellation policies.
+by_policy <- dat %>%
+  group_by(cancellation_policy) %>%
+  summarise(average_review = mean(review_rate_number))
+by_policy
+
+# View review by boroughs. 
+borough_review <- dat %>%
+  group_by(neighbourhood_group) %>%
+  summarise(avg_review = mean(review_rate_number))
+
+ggplot(borough_review, aes(x = neighbourhood_group, y = avg_review)) +
+  geom_col(aes(stat = "identity"), color = "red") +
+  geom_text(label = round(borough_review$avg_review, digits = 2), position = position_dodge(0.9), vjust = -0.5) +
+  labs(title = "Average Review Ratings by Boroughs", x = "Borough", y = "Rating") +
+  theme_classic()
+```
+
+```{r}
+
+```
+
+
