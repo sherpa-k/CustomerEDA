@@ -73,6 +73,7 @@ Looking at the distribution of prices, we can see that the average cost of an Ai
 ![pricedist](CustomerAnalysis_files/figure-gfm/unnamed-chunk-10-1.png)
 
 To split it up by boroughs :
+
 | Borough	| Listings | Average Price |
 | --- | --- | --- |
 | Brooklyn | 35154	| $627.54|
@@ -80,6 +81,17 @@ To split it up by boroughs :
 | Queens |	11301	| $630.56 |
 | Bronx	| 2310	| $630.22 |
 | Staten Island	| 834 |	$622.47 |
+
+We can see that Brooklyn and Manhattan are the main hotspots for airbnb listings, with the two boroughs accounting for 41.49% and 41.47% of the total listings, respectively. Queens and the Bronx both are the highest costing boroughs, however, there is not significant average price difference between the 5 boroughs.\\
+
+Next we broke down the average prices in each borough, by room type. In the data set there are 4 different possible room types consisting of :\
+
+| Room Type |
+| --- |
+| Entire Home / Apartment |
+| Hotel Room |
+| Private Room |
+| Shared Room |
 
 
 
