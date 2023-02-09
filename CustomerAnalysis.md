@@ -5,6 +5,7 @@ Kalsang Sherpa
 ### Required Packages :
 
 ``` r
+library(knitr)
 library(tidyverse)
 library(tidytext)
 library(geomtextpath)
@@ -19,16 +20,17 @@ library(tm)
 dat <- read_csv("Airbnb_Open_Data.csv")
 
 # view first couple rows
-head(dat)
+kable(head(dat))
 ```
 
-<div data-pagedtable="false">
-
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NAME"],"name":[2],"type":["chr"],"align":["left"]},{"label":["host id"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["host_identity_verified"],"name":[4],"type":["chr"],"align":["left"]},{"label":["host name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["neighbourhood group"],"name":[6],"type":["chr"],"align":["left"]},{"label":["neighbourhood"],"name":[7],"type":["chr"],"align":["left"]},{"label":["lat"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[10],"type":["chr"],"align":["left"]},{"label":["country code"],"name":[11],"type":["chr"],"align":["left"]},{"label":["instant_bookable"],"name":[12],"type":["lgl"],"align":["right"]},{"label":["cancellation_policy"],"name":[13],"type":["chr"],"align":["left"]},{"label":["room type"],"name":[14],"type":["chr"],"align":["left"]},{"label":["Construction year"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["price"],"name":[16],"type":["chr"],"align":["left"]},{"label":["service fee"],"name":[17],"type":["chr"],"align":["left"]},{"label":["minimum nights"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["number of reviews"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["last review"],"name":[20],"type":["chr"],"align":["left"]},{"label":["reviews per month"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["review rate number"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["calculated host listings count"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["availability 365"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["house_rules"],"name":[25],"type":["chr"],"align":["left"]},{"label":["license"],"name":[26],"type":["lgl"],"align":["right"]}],"data":[{"1":"1001254","2":"Clean & quiet apt home by the park","3":"80014485718","4":"unconfirmed","5":"Madaline","6":"Brooklyn","7":"Kensington","8":"40.64749","9":"-73.97237","10":"United States","11":"US","12":"FALSE","13":"strict","14":"Private room","15":"2020","16":"$966","17":"$193","18":"10","19":"9","20":"10/19/2021","21":"0.21","22":"4","23":"6","24":"286","25":"Clean up and treat the home the way you'd like your home to be treated.  No smoking.","26":"NA"},{"1":"1002102","2":"Skylit Midtown Castle","3":"52335172823","4":"verified","5":"Jenna","6":"Manhattan","7":"Midtown","8":"40.75362","9":"-73.98377","10":"United States","11":"US","12":"FALSE","13":"moderate","14":"Entire home/apt","15":"2007","16":"$142","17":"$28","18":"30","19":"45","20":"5/21/2022","21":"0.38","22":"4","23":"2","24":"228","25":"Pet friendly but please confirm with me if the pet you are planning on bringing with you is OK. I have a cute and quiet mixed chihuahua. I could accept more guests (for an extra fee) but this also needs to be confirmed beforehand. Also friends traveling together could sleep in separate beds for an extra fee (the second bed is either a sofa bed or inflatable bed). Smoking is only allowed on the porch.","26":"NA"},{"1":"1002403","2":"THE VILLAGE OF HARLEM....NEW YORK !","3":"78829239556","4":"NA","5":"Elise","6":"Manhattan","7":"Harlem","8":"40.80902","9":"-73.94190","10":"United States","11":"US","12":"TRUE","13":"flexible","14":"Private room","15":"2005","16":"$620","17":"$124","18":"3","19":"0","20":"NA","21":"NA","22":"5","23":"1","24":"352","25":"I encourage you to use my kitchen, cooking and laundry facilities. There is no additional charge to use the washer/dryer in the basement.  No smoking, inside or outside. Come home as late as you want.  If you come home stumbling drunk, it's OK the first time. If you do it again, and you wake up me or the neighbors downstairs, we will be annoyed.  (Just so you know . . . )","26":"NA"},{"1":"1002755","2":"NA","3":"85098326012","4":"unconfirmed","5":"Garry","6":"Brooklyn","7":"Clinton Hill","8":"40.68514","9":"-73.95976","10":"United States","11":"US","12":"TRUE","13":"moderate","14":"Entire home/apt","15":"2005","16":"$368","17":"$74","18":"30","19":"270","20":"7/5/2019","21":"4.64","22":"4","23":"1","24":"322","25":"NA","26":"NA"},{"1":"1003689","2":"Entire Apt: Spacious Studio/Loft by central park","3":"92037596077","4":"verified","5":"Lyndon","6":"Manhattan","7":"East Harlem","8":"40.79851","9":"-73.94399","10":"United States","11":"US","12":"FALSE","13":"moderate","14":"Entire home/apt","15":"2009","16":"$204","17":"$41","18":"10","19":"9","20":"11/19/2018","21":"0.10","22":"3","23":"1","24":"289","25":"Please no smoking in the house, porch or on the property (you can go to the nearby corner).  Reasonable quiet after 10:30 pm.  Please remove shoes in the house.","26":"NA"},{"1":"1004098","2":"Large Cozy 1 BR Apartment In Midtown East","3":"45498551794","4":"verified","5":"Michelle","6":"Manhattan","7":"Murray Hill","8":"40.74767","9":"-73.97500","10":"United States","11":"US","12":"TRUE","13":"flexible","14":"Entire home/apt","15":"2013","16":"$577","17":"$115","18":"3","19":"74","20":"6/22/2019","21":"0.59","22":"3","23":"1","24":"374","25":"No smoking, please, and no drugs.","26":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-
-</div>
+|      id | NAME                                             |     host id | host_identity_verified | host name | neighbourhood group | neighbourhood |      lat |      long | country       | country code | instant_bookable | cancellation_policy | room type       | Construction year | price | service fee | minimum nights | number of reviews | last review | reviews per month | review rate number | calculated host listings count | availability 365 | house_rules                                                                                                                                                                                                                                                                                                                                                                                                         | license |
+|--------:|:-------------------------------------------------|------------:|:-----------------------|:----------|:--------------------|:--------------|---------:|----------:|:--------------|:-------------|:-----------------|:--------------------|:----------------|------------------:|:------|:------------|---------------:|------------------:|:------------|------------------:|-------------------:|-------------------------------:|-----------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------|
+| 1001254 | Clean & quiet apt home by the park               | 80014485718 | unconfirmed            | Madaline  | Brooklyn            | Kensington    | 40.64749 | -73.97237 | United States | US           | FALSE            | strict              | Private room    |              2020 | \$966 | \$193       |             10 |                 9 | 10/19/2021  |              0.21 |                  4 |                              6 |              286 | Clean up and treat the home the way you’d like your home to be treated. No smoking.                                                                                                                                                                                                                                                                                                                                 | NA      |
+| 1002102 | Skylit Midtown Castle                            | 52335172823 | verified               | Jenna     | Manhattan           | Midtown       | 40.75362 | -73.98377 | United States | US           | FALSE            | moderate            | Entire home/apt |              2007 | \$142 | \$28        |             30 |                45 | 5/21/2022   |              0.38 |                  4 |                              2 |              228 | Pet friendly but please confirm with me if the pet you are planning on bringing with you is OK. I have a cute and quiet mixed chihuahua. I could accept more guests (for an extra fee) but this also needs to be confirmed beforehand. Also friends traveling together could sleep in separate beds for an extra fee (the second bed is either a sofa bed or inflatable bed). Smoking is only allowed on the porch. | NA      |
+| 1002403 | THE VILLAGE OF HARLEM….NEW YORK !                | 78829239556 | NA                     | Elise     | Manhattan           | Harlem        | 40.80902 | -73.94190 | United States | US           | TRUE             | flexible            | Private room    |              2005 | \$620 | \$124       |              3 |                 0 | NA          |                NA |                  5 |                              1 |              352 | I encourage you to use my kitchen, cooking and laundry facilities. There is no additional charge to use the washer/dryer in the basement. No smoking, inside or outside. Come home as late as you want. If you come home stumbling drunk, it’s OK the first time. If you do it again, and you wake up me or the neighbors downstairs, we will be annoyed. (Just so you know . . . )                                 | NA      |
+| 1002755 | NA                                               | 85098326012 | unconfirmed            | Garry     | Brooklyn            | Clinton Hill  | 40.68514 | -73.95976 | United States | US           | TRUE             | moderate            | Entire home/apt |              2005 | \$368 | \$74        |             30 |               270 | 7/5/2019    |              4.64 |                  4 |                              1 |              322 | NA                                                                                                                                                                                                                                                                                                                                                                                                                  | NA      |
+| 1003689 | Entire Apt: Spacious Studio/Loft by central park | 92037596077 | verified               | Lyndon    | Manhattan           | East Harlem   | 40.79851 | -73.94399 | United States | US           | FALSE            | moderate            | Entire home/apt |              2009 | \$204 | \$41        |             10 |                 9 | 11/19/2018  |              0.10 |                  3 |                              1 |              289 | Please no smoking in the house, porch or on the property (you can go to the nearby corner). Reasonable quiet after 10:30 pm. Please remove shoes in the house.                                                                                                                                                                                                                                                      | NA      |
+| 1004098 | Large Cozy 1 BR Apartment In Midtown East        | 45498551794 | verified               | Michelle  | Manhattan           | Murray Hill   | 40.74767 | -73.97500 | United States | US           | TRUE             | flexible            | Entire home/apt |              2013 | \$577 | \$115       |              3 |                74 | 6/22/2019   |              0.59 |                  3 |                              1 |              374 | No smoking, please, and no drugs.                                                                                                                                                                                                                                                                                                                                                                                   | NA      |
 
 ``` r
 summary(dat)
@@ -342,16 +344,16 @@ by_neigh <- dat %>%
   group_by(neighbourhood_group) %>%
   summarise(listings = n(), average_price = mean(price)) %>%
   arrange(desc(listings))
-by_neigh
+kable(by_neigh)
 ```
 
-<div data-pagedtable="false">
-
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["neighbourhood_group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["listings"],"name":[2],"type":["int"],"align":["right"]},{"label":["average_price"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Brooklyn","2":"35154","3":"627.5436"},{"1":"Manhattan","2":"35128","3":"623.1754"},{"1":"Queens","2":"11301","3":"630.5613"},{"1":"Bronx","2":"2310","3":"630.2156"},{"1":"Staten Island","2":"834","3":"622.4712"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-
-</div>
+| neighbourhood_group | listings | average_price |
+|:--------------------|---------:|--------------:|
+| Brooklyn            |    35154 |      627.5436 |
+| Manhattan           |    35128 |      623.1754 |
+| Queens              |    11301 |      630.5613 |
+| Bronx               |     2310 |      630.2156 |
+| Staten Island       |      834 |      622.4712 |
 
 ``` r
 neigh_roomtype <- dat %>% 
@@ -363,16 +365,29 @@ neigh_roomtype <- dat %>%
     ## using the `.groups` argument.
 
 ``` r
-neigh_roomtype
+kable(neigh_roomtype)
 ```
 
-<div data-pagedtable="false">
-
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["neighbourhood_group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["room_type"],"name":[2],"type":["chr"],"align":["left"]},{"label":["listings"],"name":[3],"type":["int"],"align":["right"]},{"label":["average_price"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Bronx","2":"Entire home/apt","3":"881","4":"633.3882"},{"1":"Bronx","2":"Private room","3":"1339","4":"630.6012"},{"1":"Bronx","2":"Shared room","3":"90","4":"593.4222"},{"1":"Brooklyn","2":"Entire home/apt","3":"18005","4":"626.0349"},{"1":"Brooklyn","2":"Hotel room","3":"8","4":"736.1250"},{"1":"Brooklyn","2":"Private room","3":"16527","4":"629.2936"},{"1":"Brooklyn","2":"Shared room","3":"614","4":"623.2622"},{"1":"Manhattan","2":"Entire home/apt","3":"21008","4":"622.6427"},{"1":"Manhattan","2":"Hotel room","3":"98","4":"684.5306"},{"1":"Manhattan","2":"Private room","3":"13332","4":"622.9842"},{"1":"Manhattan","2":"Shared room","3":"690","4":"634.3754"},{"1":"Queens","2":"Entire home/apt","3":"4520","4":"624.4985"},{"1":"Queens","2":"Hotel room","3":"8","4":"433.2500"},{"1":"Queens","2":"Private room","3":"6488","4":"634.6104"},{"1":"Queens","2":"Shared room","3":"285","4":"640.0772"},{"1":"Staten Island","2":"Entire home/apt","3":"423","4":"636.0095"},{"1":"Staten Island","2":"Private room","3":"404","4":"607.2847"},{"1":"Staten Island","2":"Shared room","3":"7","4":"680.8571"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-
-</div>
+| neighbourhood_group | room_type       | listings | average_price |
+|:--------------------|:----------------|---------:|--------------:|
+| Bronx               | Entire home/apt |      881 |      633.3882 |
+| Bronx               | Private room    |     1339 |      630.6012 |
+| Bronx               | Shared room     |       90 |      593.4222 |
+| Brooklyn            | Entire home/apt |    18005 |      626.0349 |
+| Brooklyn            | Hotel room      |        8 |      736.1250 |
+| Brooklyn            | Private room    |    16527 |      629.2936 |
+| Brooklyn            | Shared room     |      614 |      623.2622 |
+| Manhattan           | Entire home/apt |    21008 |      622.6427 |
+| Manhattan           | Hotel room      |       98 |      684.5306 |
+| Manhattan           | Private room    |    13332 |      622.9842 |
+| Manhattan           | Shared room     |      690 |      634.3754 |
+| Queens              | Entire home/apt |     4520 |      624.4985 |
+| Queens              | Hotel room      |        8 |      433.2500 |
+| Queens              | Private room    |     6488 |      634.6104 |
+| Queens              | Shared room     |      285 |      640.0772 |
+| Staten Island       | Entire home/apt |      423 |      636.0095 |
+| Staten Island       | Private room    |      404 |      607.2847 |
+| Staten Island       | Shared room     |        7 |      680.8571 |
 
 Looking at the density and distribution of listing prices. Price is
 distributed uniformly.

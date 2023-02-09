@@ -8,6 +8,7 @@ output:
 
 ### Required Packages :
 ```{r, message=FALSE, warning=FALSE}
+library(knitr)
 library(tidyverse)
 library(tidytext)
 library(geomtextpath)
@@ -22,7 +23,7 @@ library(tm)
 dat <- read_csv("Airbnb_Open_Data.csv")
 
 # view first couple rows
-head(dat)
+kable(head(dat))
 summary(dat)
 
 # Look for missing values
@@ -117,12 +118,12 @@ by_neigh <- dat %>%
   group_by(neighbourhood_group) %>%
   summarise(listings = n(), average_price = mean(price)) %>%
   arrange(desc(listings))
-by_neigh
+kable(by_neigh)
 
 neigh_roomtype <- dat %>% 
   group_by(neighbourhood_group, room_type) %>%
   summarise(listings = n(), average_price = mean(price))
-neigh_roomtype
+kable(neigh_roomtype)
 ```
 
 Looking at the density and distribution of listing prices. Price is distributed uniformly.
