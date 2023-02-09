@@ -21,9 +21,6 @@ library(tm)
 ### Data Importing : 
 ```{r, warning = FALSE, message = FALSE}
 dat <- read_csv("Airbnb_Open_Data.csv")
-
-# view first couple rows
-kable(head(dat))
 summary(dat)
 
 # Look for missing values
