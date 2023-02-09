@@ -2,7 +2,7 @@
 title: "Airbnb Data Analysis"
 author: "Kalsang Sherpa"
 output:
-  html_document:
+  rmarkdown::github_document:
     df_print: paged
 ---
 
