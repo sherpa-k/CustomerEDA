@@ -9,7 +9,11 @@ output:
 ### Required Packages :
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(tidytext)
 library(geomtextpath)
+library(wordcloud)
+library(RColorBrewer)
+library(tm)
 ```
 
 
@@ -125,7 +129,7 @@ Distribution of Price
 ```{r}
 ggplot(dat, aes(x = price)) +
   geom_histogram(aes(y = ..density..), bins = 20, colour = "red", fill = "white") +
-  labs(title = "Density Plot  of Price",
+  labs(title = "Density Plot of Price",
        x = "Price",
        y = "Density") +
   geom_density(alpha = .2, fill = "blue") +
@@ -158,7 +162,33 @@ ggplot(dat, aes(x = review_rate_number)) +
   geom_textvline(xintercept = avg_rating, linetype = "dotdash", label = paste("Average = ", avg_rating, sep = "")) +
   theme_minimal()
 
+# Find top ten neighborhoods in terms of reviews.
+top_ten <- dat %>%
+  group_by(neighbourhood_group, neighbourhood) %>%
+  summarise(listings = n(), avg_rating = mean(review_rate_number)) %>%
+  arrange(desc(avg_rating)) %>%
+  # Set threshold to at least 50 listings.
+  filter(listings > 50) 
+# get the first 10. 
+top_ten <- top_ten[1:10,]
+top_ten$neighbourhood <- factor(top_ten$neighbourhood, levels = top_ten$neighbourhood[order(top_ten$avg_rating, decreasing = TRUE)])
+
+
+ggplot(top_ten, aes(x = neighbourhood, y = avg_rating, group = neighbourhood_group)) +
+  geom_col(aes(stat = "identity", fill = top_ten$neighbourhood_group), color = "lightblue") +
+  labs(title = "Top Ten Rated Neighborhoods",
+       x = "Neighborhood",
+       y = "Rating",
+       fill = "Borough",
+       caption = "50 listings in neighborhood or greater required to qualify") +
+  geom_text(label = round(top_ten$avg_rating, digits = 2), position = position_dodge(0.9), vjust = -0.2) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        plot.caption = element_text(hjust = 0))
+
 ```
+
+
 Correlation between cancellation policy and reviews.
 ```{r}
 prop.table(table(dat$cancellation_policy))
@@ -181,8 +211,44 @@ ggplot(borough_review, aes(x = neighbourhood_group, y = avg_review)) +
   theme_classic()
 ```
 
-```{r}
+```{r, warning = FALSE}
+# Get 4 and 5 star reviews.
+highreviews.dat <- dat %>%
+  filter(review_rate_number > 4 | review_rate_number >5)
+highreviews.dat <- tibble(highreviews.dat[,2])
+
+txt <- highreviews.dat$name
+corp.dat <- Corpus(VectorSource(txt))
+
+# Clean up the text. 
+corp.dat <- corp.dat %>%
+  tm_map(removePunctuation) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(stripWhitespace) %>%
+  tm_map(removeWords, stopwords("english"))
+
+tdm.dat <- TermDocumentMatrix(corp.dat)
+matrix <- as.matrix(tdm.dat)
+results <- sort(rowSums(matrix), decreasing = TRUE)
+
+df.dat <- data.frame(word = names(results), freq = results)
+
+
+# Store only adjectives
+df.dat <- df.dat %>% 
+  left_join(parts_of_speech) %>%
+  filter(pos %in% "Adjective")
+
+# Create word cloud
+set.seed(3005)
+wordcloud(words = df.dat$word, freq = df.dat$freq, min.freq = 50, random.order = FALSE, colors = brewer.pal(9, 'Set1'))
+
+top_ten <- df.dat[1:10,]
+top_ten$word <- factor(top_ten$word, levels = top_ten$word[order(top_ten$freq, decreasing = TRUE)])
+ggplot(top_ten, aes(x = word, y = freq)) +
+  geom_col(aes(stat = "identity"), fill = "lightblue", color = "black") 
+
+
 
 ```
-
 
