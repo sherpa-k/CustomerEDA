@@ -82,7 +82,7 @@ To split it up by boroughs :
 | Bronx	| 2310	| $630.22 |
 | Staten Island	| 834 |	$622.47 |
 
-We can see that Brooklyn and Manhattan are the main hotspots for airbnb listings, with the two boroughs accounting for 41.49% and 41.47% of the total listings, respectively. Queens and the Bronx both are the highest costing boroughs, however, there is not significant average price difference between the 5 boroughs.\
+We can see that Brooklyn and Manhattan are the main hotspots for airbnb listings, with the two boroughs accounting for 41.49% and 41.47% of the total listings, respectively. Queens and the Bronx both are the highest costing boroughs, however, there is not significant average price difference between the 5 boroughs.
 
 Next we broke down the average prices in each borough, by room type. In the data set there are 4 different possible room types consisting of :
 
@@ -95,20 +95,33 @@ Next we broke down the average prices in each borough, by room type. In the data
 
 ![byroom](CustomerAnalysis_files/figure-gfm/unnamed-chunk-11-1.png)
 
-In the bar chart above, we can see that in Bronx there were no listings for hotel rooms and neither was there for Staten Island, which makes sense as hotel rooms were scarce with only 114 total listings (.13%). For Brooklyn and Manhattan we can see that hotel rooms were clearly more expensive than other room types in their respective boroughs, however, in Queens, hotel rooms were much cheaper. Entire homes/apartments were very consistent with their pricing across all 5 boroughs.\
+In the bar chart above, we can see that in Bronx there were no listings for hotel rooms and neither was there for Staten Island, which makes sense as hotel rooms were scarce with only 114 total listings (.13%). For Brooklyn and Manhattan we can see that hotel rooms were clearly more expensive than other room types in their respective boroughs, however, in Queens, hotel rooms were much cheaper. Entire homes/apartments were very consistent with their pricing across all 5 boroughs.
 
-Next we took a look at the ratings that the hosts were given.\
+Next we took a look at the ratings that the hosts were given.
 ![reviews](CustomerAnalysis_files/figure-gfm/unnamed-chunk-12-1.png)
-The average rating came out to be 3.28 for all listings. The rating scores were distributed with around 20,000 entries for scores of 2-4 and less than 10,000 entries for a score of 1.\
+The average rating came out to be 3.28 for all listings. The rating scores were distributed with around 20,000 entries for scores of 2-4 and less than 10,000 entries for a score of 1.
 
-Analyzing the review ratings to see if neighborhoods skewed the scores, took the average ratings for neighborhoods. However once we ordered the review ratings, we limited our entries to neighborhoods that had over 50 listings as a way to combat skews from lack of sufficient data (i.e. neighbourhoods that had 1 listing that scored a 5). Therefore, we viewed only the neighborhoods that hosted 50 times.\
+Analyzing the review ratings to see if neighborhoods skewed the scores, took the average ratings for neighborhoods. However once we ordered the review ratings, we limited our entries to neighborhoods that had over 50 listings as a way to combat skews from lack of sufficient data (i.e. neighbourhoods that had 1 listing that scored a 5). Therefore, we viewed only the neighborhoods that hosted 50 times.
 
 ![neighborhoods](CustomerAnalysis_files/figure-gfm/unnamed-chunk-13-1.png)
 
-We can see that the highest scoring neighbourhood was Stapleton, Staten Island with an average score of 3.66. Queens had 6 of the top 10 neighborhood ratings in our findings with 4 of them landing in the top 6. Brooklyn had 3 as well in the top 10 and no neighborhoods in the Bronx or Manhattan landed in the top 10 rated neighborhoods. This could however, be due to the lack of having over 50 listings in the those neighborhoods. Therefore, we viewed the ratings by boroughs as a whole.\
+We can see that the highest scoring neighbourhood was Stapleton, Staten Island with an average score of 3.66. Queens had 6 of the top 10 neighborhood ratings in our findings with 4 of them landing in the top 6. Brooklyn had 3 as well in the top 10 and no neighborhoods in the Bronx or Manhattan landed in the top 10 rated neighborhoods. This could however, be due to the lack of having over 50 listings in the those neighborhoods. Therefore, we viewed the ratings by boroughs as a whole.
 
 ![boroughs](CustomerAnalysis_files/figure-gfm/unnamed-chunk-15-1.png)
 
-Looking at the average scores per borough, we can see that Staten Island was rated the highest with 3.41 and Brooklyn came in last with a score of 3.26. However, it is important to note that Staten Island only had 834 total listings (0.98%).\
+Looking at the average scores per borough, we can see that Staten Island was rated the highest with 3.41 and Brooklyn came in last with a score of 3.26. However, it is important to note that Staten Island only had 834 total listings (0.98%).
+
+### WordCloud
+
+Lastly, we took a look at the listings rated 4 or 5 stars. In order to find similarities in those listings, we looked at the different adjectives that were used in the names of those listings, for example "Cozy 2 Bedroom Apartment", we would add a frequency word to the word cozy. After finding the different adjectives used and discarding all nouns and other words, we created a wordcloud and frequency bar graph.
+
+![wordcloud](CustomerAnalysis_files/figure-gfm/unnamed-chunk-16-1.png)
+
+![wordfreq](CustomerAnalysis_files/figure-gfm/unnamed-chunk-16-2.png)
+
+In the frequency table we can see that the best rated listings used 'private', 'cozy' and 'spacious' the most, giving us more insight on what a customer valued the most and what words impacted the given rating the most. 
+
+
+
 
 
