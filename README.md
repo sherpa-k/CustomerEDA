@@ -106,4 +106,4 @@ Analyzing the review ratings to see if neighborhoods skewed the scores, took the
 ![neighborhoods](CustomerAnalysis_files/figure-gfm/unnamed-chunk-13-1.png)
 
 We can see that the highest scoring neighbourhood was 
-
+v
